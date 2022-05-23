@@ -15,13 +15,14 @@ import { getAnalytics } from 'firebase/analytics';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyDCnTk-MtE1xgvfWpIIDfC1o3ArEFPPWMg',
-  authDomain: 'pokedex-78062.firebaseapp.com',
-  projectId: 'pokedex-78062',
-  storageBucket: 'pokedex-78062.appspot.com',
-  messagingSenderId: '927945696404',
-  appId: '1:927945696404:web:d8c50d0923173c4e464081',
-  measurementId: 'G-Z4BMNT1ZVT'
+  apiKey: 'AIzaSyCeJkFUDKg0Qs4Jonvdr6Xs2Ch_cX6EOeo',
+  authDomain: 'pokeapp-9cf2b.firebaseapp.com',
+  databaseURL: 'https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'pokeapp-9cf2b',
+  storageBucket: 'pokeapp-9cf2b.appspot.com',
+  messagingSenderId: '699618104118',
+  appId: '1:699618104118:web:7b099cb019289634c49997',
+  measurementId: 'G-J7JZ2ECV28'
 };
 
 // Initialize Firebase
