@@ -8,10 +8,6 @@ import { PokeCollapsePageRoutingModule } from './poke-collapse-routing.module';
 
 import { PokeCollapsePage } from './poke-collapse.page';
 
-class Pokemon {
-}
-
-
 
 @NgModule({
   imports: [
@@ -23,5 +19,4 @@ class Pokemon {
   declarations: [PokeCollapsePage]
 })
 export class PokeCollapsePageModule {
-  public pokedex: Pokemon[] | undefined;
-  @Output() selected = new EventEmitter<string>();}
+ }
