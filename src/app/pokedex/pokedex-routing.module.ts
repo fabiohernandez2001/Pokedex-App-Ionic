@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: PokedexPage
+  },
+  {
+    path: 'poke-collapse',
+    loadChildren: () => import('./poke-collapse/poke-collapse.module').then( m => m.PokeCollapsePageModule)
   }
 ];
 
