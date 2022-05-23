@@ -15,12 +15,7 @@ export class UserService {
   
   user: any;
 
-  constructor(
-    public afStore: AngularFirestore,
-    public ngFireAuth: AngularFireAuth,
-    public router: Router,
-    public ngZone: NgZone
-  ) {
+  constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
         this.user = user;
@@ -47,16 +42,29 @@ export class UserService {
     );
     const userData: User = {
       uid: user.uid,
+      name: user.name,
       email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
+      photo: user.photo
     };
     return userRef.set(userData, {
       merge: true,
     });
   }
   
+  AuthLogin(provider) {
+    return this.ngFireAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        this.ngZone.run(() => {
+          this.router.navigate(['dashboard']);
+        });
+        this.SetUserData(result.user);
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
+  }
+
   SignOut() {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
