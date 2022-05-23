@@ -6,7 +6,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./poke-collapse.page.scss'],
 })
 export class PokeCollapsePage implements OnInit {
-  public pokedex: Pokemon[] | undefined;
+  //public pokedex: Pokemon[] | undefined;
   @Output() selected = new EventEmitter<string>();
   constructor() { }
 
