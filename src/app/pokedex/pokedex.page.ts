@@ -10,19 +10,19 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./pokedex.page.scss'],
 })
 export class PokedexPage implements OnInit {
-  /*@Output() selected = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<string>();
   public pokedex: Pokemon[] | undefined;
-  public isCollapsed = true;*/
+  public isCollapsed = true;
 
   constructor(private pokedexService: PokedexService) { }
 
   ngOnInit() {
-    /*if (this.pokedex == null) {
+    if (this.pokedex == null) {
       this.getPokedex();
-    }*/
+    }
   }
 
-  /*public getPokedex(): void {
+  public getPokedex(): void {
     this.pokedexService.getPokedex().subscribe(
       (response: Pokemon[]) => {
         this.pokedex = response;
@@ -31,9 +31,9 @@ export class PokedexPage implements OnInit {
         alert(error.message);
       }
     );
-  }*/
+  }
 
-  /*public changeNames(name: string) {
+  public changeNames(name: string) {
     this.selected.emit(name);
-  }*/
+  }
 }

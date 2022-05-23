@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PokedexPageRoutingModule } from './pokedex-routing.module';
 
 import { PokedexPage } from './pokedex.page';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   imports: [

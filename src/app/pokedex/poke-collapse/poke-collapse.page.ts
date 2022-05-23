@@ -19,14 +19,14 @@ export class PokeCollapsePage implements OnInit {
   }
 
   public getPokedex(): void {
-    this.pokedexService.getPokedex().subscribe(
+    /*this.pokedexService.getPokedex().subscribe(
       (response: Pokemon[]) => {
         this.pokedex = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
-    );
+    );*/
   }
 
   public changeNames(name: string) {
