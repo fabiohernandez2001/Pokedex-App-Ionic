@@ -1,32 +1,67 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Injectable, NgZone } from '@angular/core';
+import * as auth from 'firebase/auth';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
+
 import {User} from './user';
 @Injectable({
   providedIn: 'root'
 })
-export class UserCrudService {
-  httpOptions = {
-    headers: new HttpHeaders({'content-Type': 'application/json'})
-  };
+export class UserService {
+  
+  user: any;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    public afStore: AngularFirestore,
+    public ngFireAuth: AngularFireAuth,
+    public router: Router,
+    public ngZone: NgZone
+  ) {
+    this.ngFireAuth.authState.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        localStorage.setItem('user', JSON.stringify(this.user));
+        JSON.parse(localStorage.getItem('user'));
+      } else {
+        localStorage.setItem('user', null);
+        JSON.parse(localStorage.getItem('user'));
+      }
+    });
   }
 
-  register(user: User): Observable<any> {
-    return this.httpClient.post<User>(
-      'http://localhost:5000/api/register', user, this.httpOptions)
-      .pipe(
-        catchError(this.handleError<User>('Error occured'))
-      );
+  SignIn(email, password) {
+    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
+  RegisterUser(email, password) {
+    return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+  }
+
+  SetUserData(user) {
+    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
+      `users/${user.uid}`
+    );
+    const userData: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
     };
+    return userRef.set(userData, {
+      merge: true,
+    });
   }
+  
+  SignOut() {
+    return this.ngFireAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['login']);
+    });
+  }
+
 }

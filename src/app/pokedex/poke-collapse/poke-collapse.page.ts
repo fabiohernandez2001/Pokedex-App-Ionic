@@ -9,7 +9,7 @@ import {Pokemon} from '../pokemon';
   styleUrls: ['./poke-collapse.page.scss'],
 })
 export class PokeCollapsePage implements OnInit {
-  public pokedex: Pokemon[] | undefined;
+  //public pokedex: Pokemon[] | undefined;
   @Output() selected = new EventEmitter<string>();
 
   constructor(private pokedexService: PokedexService){}
