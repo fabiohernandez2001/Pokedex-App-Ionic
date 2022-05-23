@@ -12,16 +12,16 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'pokedex',
+    loadChildren: () => import('./pokedex/pokedex.module').then( m => m.PokedexPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./user/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'register',
     loadChildren: () => import('./user/register/register.module').then( m => m.RegisterPageModule)
-  },
-  {
-    path: 'pokedex',
-    loadChildren: () => import('./pokedex/pokedex.module').then( m => m.PokedexPageModule)
   },
 ];
 
