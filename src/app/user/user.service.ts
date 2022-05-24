@@ -30,8 +30,11 @@ export class UserService {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
-  registerUser(email, password) {
-    return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+  registerUser(emailP, password, nameP) {
+    this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
+    const user : User = {uid:"1", name:nameP, email:emailP, photo:""};
+    this.setUserData(user);
+    return this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
   }
 
   setUserData(user) {
@@ -68,6 +71,11 @@ export class UserService {
       localStorage.removeItem('user');
       this.router.navigate(['login']);
     });
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user !== null;
   }
 
 }

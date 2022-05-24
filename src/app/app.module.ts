@@ -29,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireDatabaseModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule,NgbModule
+    FormsModule,
+    NgbModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

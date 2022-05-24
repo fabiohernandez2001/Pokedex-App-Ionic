@@ -15,16 +15,6 @@ export class RegisterPage implements OnInit {
   constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) {
   }
 
-  signUp(email, password) {
-    this.userService.registerUser(email, password)
-      .then((res) => {
-        console.log('Exito en la autenticación');
-        this.router.navigate(['pokedex']);
-      }).catch((error) => {
-      window.alert(error.message);
-    });
-  }
-
   ngOnInit(): void {
     this.form = this.initForm();
   }
@@ -55,9 +45,17 @@ export class RegisterPage implements OnInit {
   rPasswd() {
     return this.form.get('repeatPassword');
   }
+
   onSubmit(){
-    this.signUp(this.form.value.email,this.form.value.password);
+    this.userService.registerUser(this.form.value.email,this.form.value.password,this.form.value.name)
+      .then((res) => {
+        console.log('Exito en la autenticación');
+        this.router.navigate(['pokedex']);
+      }).catch((error) => {
+      window.alert(error.message);
+    });
   }
+
   comparePasswdValidator(passwd: string, repeatPasswd: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[passwd];
