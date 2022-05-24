@@ -55,7 +55,9 @@ export class RegisterPage implements OnInit {
   rPasswd() {
     return this.form.get('repeatPassword');
   }
-
+  onSubmit(){
+    this.signUp(this.form.value.email,this.form.value.password);
+  }
   comparePasswdValidator(passwd: string, repeatPasswd: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[passwd];
