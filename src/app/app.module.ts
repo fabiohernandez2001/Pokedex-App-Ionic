@@ -14,14 +14,14 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, 
-    IonicModule.forRoot(), 
-    AppRoutingModule, 
+  imports: [BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -29,7 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularFireDatabaseModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,NgbModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
