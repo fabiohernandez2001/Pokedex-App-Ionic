@@ -12,11 +12,11 @@ export class RegisterPage implements OnInit {
 
   form!: FormGroup;
 
-  constructor(public authService: UserService, public router: Router, private formBuilder: FormBuilder) {
+  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) {
   }
 
   signUp(email, password) {
-    this.authService.registerUser(email.value, password.value)
+    this.userService.registerUser(email, password)
       .then((res) => {
         console.log('Exito en la autenticación');
         this.router.navigate(['pokedex']);
