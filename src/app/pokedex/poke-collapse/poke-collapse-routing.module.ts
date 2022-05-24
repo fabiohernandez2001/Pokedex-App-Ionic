@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: PokeCollapsePage
+  },  {
+    path: 'pokemon-detail',
+    loadChildren: () => import('./pokemon-detail/pokemon-detail.module').then( m => m.PokemonDetailPageModule)
   }
+
 ];
 
 @NgModule({

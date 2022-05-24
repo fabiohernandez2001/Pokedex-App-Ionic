@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PokedexService} from '../pokedex.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Pokemon} from '../pokemon';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-poke-collapse',
@@ -9,8 +10,9 @@ import {Pokemon} from '../pokemon';
   styleUrls: ['./poke-collapse.page.scss'],
 })
 export class PokeCollapsePage implements OnInit {
-  @Output() selected = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<number>();
   public pokedex: Pokemon[] | undefined;
+  public environ = environment;
 
   constructor(private pokedexService: PokedexService){}
 
@@ -29,7 +31,11 @@ export class PokeCollapsePage implements OnInit {
     );
   }
 
-  public changeNames(name: string) {
-    this.selected.emit(name);
+  public changeNames(pokemon: Pokemon) {
+    this.pokedexService.setSelected(pokemon);
+  }
+
+  toString(i: number) {
+    return String(i);
   }
 }

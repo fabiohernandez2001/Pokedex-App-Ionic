@@ -8,12 +8,16 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'pokedex',
     pathMatch: 'full'
   },
   {
     path: 'pokedex',
-    loadChildren: () => import('./pokedex/pokedex.module').then( m => m.PokedexPageModule)
+    loadChildren: () => import('./pokedex/poke-collapse/poke-collapse.module').then( m => m.PokeCollapsePageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./pokedex/poke-collapse/poke-collapse.module').then( m => m.PokeCollapsePageModule)
   },
   {
     path: 'login',
