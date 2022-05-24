@@ -12,9 +12,7 @@ import {User} from './user';
   providedIn: 'root'
 })
 export class UserService {
-  
   user: any;
-
   constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -28,15 +26,15 @@ export class UserService {
     });
   }
 
-  SignIn(email, password) {
+  signIn(email, password) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
-  RegisterUser(email, password) {
+  registerUser(email, password) {
     return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  SetUserData(user) {
+  setUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
       `users/${user.uid}`
     );
@@ -50,22 +48,22 @@ export class UserService {
       merge: true,
     });
   }
-  
-  AuthLogin(provider) {
+
+  authLogin(provider) {
     return this.ngFireAuth
       .signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         });
-        this.SetUserData(result.user);
+        this.setUserData(result.user);
       })
       .catch((error) => {
         window.alert(error);
       });
   }
 
-  SignOut() {
+  signOut() {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['login']);

@@ -1,9 +1,12 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>poke-collapse</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <ion-list *ngFor="let pokemon of pokedex">
+    <ion-item>
+      <img src="https://img.pokemondb.net/sprites/sword-shield/icon/{{pokemon.name.toLowerCase().replace(' ', '-').replace('.', '').replace('\'', '').replace(':', '').replace('é', 'e').replace('é', 'e')}}.png">
+      Nº{{pokemon.pnumber}} {{pokemon.name}}
+      <ion-button slot="end" [routerLink]="">PokéInfo</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

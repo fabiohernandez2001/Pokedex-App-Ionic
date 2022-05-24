@@ -16,13 +16,13 @@ export class RegisterPage implements OnInit {
  
 
   signUp(email, password){
-      this.authService.RegisterUser(email.value, password.value)      
+      this.authService.registerUser(email.value, password.value)
       .then((res) => {
         console.log("Exito en la autenticación");
         this.router.navigate(['pokedex']);
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        window.alert(error.message);
+      });
   }
 
   ngOnInit(): void {

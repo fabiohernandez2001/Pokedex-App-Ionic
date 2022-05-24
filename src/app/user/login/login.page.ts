@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
   }
 
   logIn(email, password) {
-    this.userService.SignIn(email.value, password.value)
+    this.userService.signIn(email.value, password.value)
       .then((res) => {
         //Comprobar si existe la cuenta
         /*if(this.userService.isEmailVerified) {
