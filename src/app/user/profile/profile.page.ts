@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../user';
 import {UserService} from '../user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +10,18 @@ import {UserService} from '../user.service';
 })
 export class ProfilePage implements OnInit {
   user!: User;
-  constructor(userService: UserService) { }
+  constructor(public userService: UserService, public router: Router) { }
 
   ngOnInit() {
     this.user=JSON.parse(localStorage.getItem('user'));
   }
-
+  signOut(){
+    this.userService.signOut().then(r => {
+      console.log('Sesión cerrada');
+      this.router.navigate(['pokedex']);
+    }).catch((error)=>{
+      console.log(error);
+    });
+  }
 
 }
