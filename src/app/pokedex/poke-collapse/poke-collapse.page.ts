@@ -9,8 +9,8 @@ import {Pokemon} from '../pokemon';
   styleUrls: ['./poke-collapse.page.scss'],
 })
 export class PokeCollapsePage implements OnInit {
-  //public pokedex: Pokemon[] | undefined;
   @Output() selected = new EventEmitter<string>();
+  public pokedex: Pokemon[] | undefined;
 
   constructor(private pokedexService: PokedexService){}
 
@@ -19,14 +19,14 @@ export class PokeCollapsePage implements OnInit {
   }
 
   public getPokedex(): void {
-    /*this.pokedexService.getPokedex().subscribe(
+    this.pokedexService.getPokedex().subscribe(
       (response: Pokemon[]) => {
         this.pokedex = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
-    );*/
+    );
   }
 
   public changeNames(name: string) {

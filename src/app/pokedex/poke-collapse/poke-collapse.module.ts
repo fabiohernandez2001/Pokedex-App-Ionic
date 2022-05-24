@@ -10,13 +10,16 @@ import { PokeCollapsePage } from './poke-collapse.page';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PokeCollapsePageRoutingModule
-  ],
-  declarations: [PokeCollapsePage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        PokeCollapsePageRoutingModule
+    ],
+    exports: [
+        PokeCollapsePage
+    ],
+    declarations: [PokeCollapsePage]
 })
 export class PokeCollapsePageModule {
  }
