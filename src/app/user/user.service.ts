@@ -8,12 +8,13 @@ import {
 } from '@angular/fire/compat/firestore';
 
 import {User} from './user';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   user: any;
-  constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone) {
+  constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone, public http: HttpClient) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
         this.user = user;
@@ -30,40 +31,29 @@ export class UserService {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
-  registerUser(emailP, password, nameP) {
-    this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
-    const user : User = {uid:"1", name:nameP, email:emailP, photo:""};
+  registerUser(email, password, nameP) {
+    const a = this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    const user=JSON.parse(localStorage.getItem('user'));
+    user.name = nameP;
     this.setUserData(user);
-    return this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
+    return a;
   }
 
   setUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
+    /*const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
       `users/${user.uid}`
-    );
+    );*/
     const userData: User = {
       uid: user.uid,
       name: user.name,
       email: user.email,
       photo: user.photo
     };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-
-  authLogin(provider) {
-    return this.ngFireAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-        this.setUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
+    this.http.post("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", user).subscribe(
+        response=>console.log("Usuario creado: " + user),
+        error=> console.log("Error: " + error),
+    );
+    return;
   }
 
   signOut() {
