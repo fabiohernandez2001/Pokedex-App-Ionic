@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  constructor(public userService: UserService, public router : Router) { }
 
   ngOnInit() {
+  }
+
+  logIn(email, password) {
+    this.userService.SignIn(email.value, password.value)
+      .then((res) => {
+        //Comprobar si existe la cuenta
+        /*if(this.userService.isEmailVerified) {
+          this.router.navigate(['dashboard']);          
+        }*/ 
+        console.log(res);
+      }).catch((error) => {
+        window.alert(error.message)
+      })
   }
 
 }
