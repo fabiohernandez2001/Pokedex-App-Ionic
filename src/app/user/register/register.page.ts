@@ -12,15 +12,17 @@ export class RegisterPage implements OnInit {
 
   form!: FormGroup;
 
-  constructor( public authService: UserService, public router: Router, private formBuilder: FormBuilder) { }
-  signUp(email, password){
-      this.authService.registerUser(email.value, password.value)
+  constructor(public authService: UserService, public router: Router, private formBuilder: FormBuilder) {
+  }
+
+  signUp(email, password) {
+    this.authService.registerUser(email.value, password.value)
       .then((res) => {
         console.log('Exito en la autenticación');
         this.router.navigate(['pokedex']);
       }).catch((error) => {
-        window.alert(error.message);
-      });
+      window.alert(error.message);
+    });
   }
 
   ngOnInit(): void {
@@ -34,39 +36,38 @@ export class RegisterPage implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
     }, {
-      validator: comparePasswdValidator('password', 'repeatPassword')
+      validator: this.comparePasswdValidator('password', 'repeatPassword')
     });
   }
 
-  get name(){
+  name() {
     return this.form.get('userName');
   }
 
-  get email(){
+  email() {
     return this.form.get('email');
   }
 
-  get passwd(){
+  passwd() {
     return this.form.get('password');
   }
 
-  get rPasswd(){
+  rPasswd() {
     return this.form.get('repeatPassword');
   }
 
-}
-
-function comparePasswdValidator(passwd: string, repeatPasswd: string) {
-  return (formGroup: FormGroup) => {
-    const control = formGroup.controls[passwd];
-    const matchingControl = formGroup.controls[repeatPasswd];
-    if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
+  comparePasswdValidator(passwd: string, repeatPasswd: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[passwd];
+      const matchingControl = formGroup.controls[repeatPasswd];
+      if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
         return;
-    }
-    if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ confirmedValidator: true });
-    } else {
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({confirmedValidator: true});
+      } else {
         matchingControl.setErrors(null);
-    }
-  };
+      }
+    };
+  }
 }
