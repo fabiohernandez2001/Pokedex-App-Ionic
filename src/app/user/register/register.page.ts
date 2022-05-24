@@ -13,8 +13,9 @@ export class RegisterPage implements OnInit {
 
 
   signUp(email, password){
-      this.authService.RegisterUser(email.value, password.value)
+      this.authService.registerUser(email.value, password.value)
       .then((res) => {
+
         // Do something here
       }).catch((error) => {
         window.alert(error.message);
