@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>{{this.user.email}}</ion-item>
+  <ion-item>{{this.user.name}}</ion-item>
+  <ion-img src="{{this.user.photo}}"></ion-img>
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" (click)="signOut()" expand="block">Login</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

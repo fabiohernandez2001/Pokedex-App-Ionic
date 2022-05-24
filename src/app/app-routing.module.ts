@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'pokedex',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -27,6 +27,11 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./user/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+
 ];
 
 @NgModule({
