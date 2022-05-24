@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { UserService } from "../user.service"
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -10,15 +10,15 @@ import { UserService } from "../user.service"
 export class RegisterPage implements OnInit {
 
   constructor( public authService: UserService, public router: Router) { }
- 
+
 
   signUp(email, password){
-      this.authService.RegisterUser(email.value, password.value)      
+      this.authService.RegisterUser(email.value, password.value)
       .then((res) => {
         // Do something here
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        window.alert(error.message);
+      });
   }
 
   ngOnInit() {

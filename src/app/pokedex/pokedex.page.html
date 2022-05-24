@@ -1,54 +1,7 @@
-<ion-accordion value="pokepokedex" *ngFor="let pokemon of pokedex">
-  <ion-item slot="header">
-    <ion-label>{{pokemon.name}}</ion-label>
-  </ion-item>
+<head>
+  <title>Pokédex</title>
+</head>
 
-  <ion-item slot="content" class="bg-danger rounded-3 p-4">
-    <div class="rounded-3 text-black fs-6 bg-white p-2 d-block d-md-none">
-      <img class="img-fluid" src="https://img.pokemondb.net/artwork/large/{{pokemon.name.toLowerCase().replace(' ', '-').replace('.', '').replace('\'', '').replace(':', '').replace('é', 'e').replace('é', 'e')}}.jpg">
-    </div>
-    <br class="d-block d-md-none">
-    <div class="rounded-3 text-black fs-6 bg-white p-2 border border-2 border-dark">
-      <b>Classification: </b> {{pokemon.species}}
-      <br>
-      <b>Type (s): </b> {{pokemon.type1}} // {{pokemon.type2}}
-      <br>
-      <b>Weight: </b>
-      {{pokemon.weight}} kg
-      <br>
-      <b>Height: </b>
-      {{pokemon.height}} m
-    </div>
-    <br>
-    <div class="rounded-3 text-black fs-6 bg-white p-2 border border-2 border-dark">
-      <b>Abilities: </b>
-      {{pokemon.possibleAbilities[0]}},
-      {{pokemon.possibleAbilities[1]}}
-      <br>
-      <b>Hidden Ability: </b>
-      {{pokemon.possibleAbilities[2]}}
-    </div>
-    <br>
-    <div class="rounded-3 text-black fs-6 bg-white p-2 border border-2 border-dark">
-
-      <br>
-      <ion-accordion class="row row-cols-3 row-cols-md-2 row-cols-lg-1 p-3">
-        <ion-item slot="header" class="btn btn-danger col">
-          <ion-label>Moves:</ion-label>
-        </ion-item>
-        <ion-item slot="content" class="border border-dark rounded-3 my-2 col" *ngFor="let move of pokemon.learnset">
-          {{move.replace('-', ' ') | titlecase}}
-        </ion-item>
-      </ion-accordion>
-    </div>
-    <br>
-    <div class="rounded-3 text-black bg-white p-4 fs-6 border border-2 border-dark">
-      <p>Health: {{pokemon.stats[0]}}<ngb-progressbar type="danger" textType="black" value="pokemon.stats[0]" max="200"></ngb-progressbar></p>
-      <p>Attack: {{pokemon.stats[1]}}<ngb-progressbar type="danger" textType="black" value="pokemon.stats[1]" max="200"></ngb-progressbar></p>
-      <p>Defense: {{pokemon.stats[2]}}<ngb-progressbar type="danger" textType="black" value="pokemon.stats[2]" max="200"></ngb-progressbar></p>
-      <p>Special Attack: {{pokemon.stats[3]}}<ngb-progressbar type="danger" textType="black" value="pokemon.stats[3]" max="200"></ngb-progressbar></p>
-      <p>Special Defense: {{pokemon.stats[4]}}<ngb-progressbar type="danger" textType="black" value="pokemon.stats[4]" max="200"></ngb-progressbar></p>
-      <p>Speed: {{pokemon.stats[5]}}<ngb-progressbar type="danger" textType="black" value="pokemon.stats[5]" max="200"></ngb-progressbar></p>
-    </div>
-  </ion-item>
-</ion-accordion>
+<body>
+<app-poke-collapse></app-poke-collapse>
+</body>
