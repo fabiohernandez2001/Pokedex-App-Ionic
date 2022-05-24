@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
-import { UserService } from "../user.service"
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -12,13 +12,11 @@ export class RegisterPage implements OnInit {
 
   form!: FormGroup;
 
-  constructor( public authService: UserService, public router: Router, private formBuilder : FormBuilder) { }
- 
-
+  constructor( public authService: UserService, public router: Router, private formBuilder: FormBuilder) { }
   signUp(email, password){
       this.authService.registerUser(email.value, password.value)
       .then((res) => {
-        console.log("Exito en la autenticación");
+        console.log('Exito en la autenticación');
         this.router.navigate(['pokedex']);
       }).catch((error) => {
         window.alert(error.message);
@@ -37,7 +35,7 @@ export class RegisterPage implements OnInit {
       repeatPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
     }, {
       validator: comparePasswdValidator('password', 'repeatPassword')
-    })
+    });
   }
 
   get name(){
@@ -55,7 +53,7 @@ export class RegisterPage implements OnInit {
   get rPasswd(){
     return this.form.get('repeatPassword');
   }
-  
+
 }
 
 function comparePasswdValidator(passwd: string, repeatPasswd: string) {
@@ -70,5 +68,5 @@ function comparePasswdValidator(passwd: string, repeatPasswd: string) {
     } else {
         matchingControl.setErrors(null);
     }
-  }
+  };
 }
