@@ -24,10 +24,10 @@ export class SqlService{
               alert(JSON.stringify('funciona'));
             })
             .catch((error) => {
-              alert(JSON.stringify('no funciona la senctencia'));
+              alert(JSON.stringify(error));
             });
         })
-        .catch((error) => alert(JSON.stringify('ni se conecta')));
+        .catch((error) => alert(JSON.stringify(error)));
     });
   }
   public getFav(fav){
