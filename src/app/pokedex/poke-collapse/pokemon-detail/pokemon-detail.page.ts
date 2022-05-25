@@ -21,6 +21,10 @@ export class PokemonDetailPage implements OnInit{
     return this.sqlite.getFav(this.pokemon);
   }
   change(){
-    this.sqlite.deleteFav(this.pokemon);
+    if(this.isfav()){
+      this.sqlite.deleteFav(this.pokemon);
+    }else{
+      this.sqlite.addFav(this.pokemon);
+    }
   }
 }
