@@ -47,7 +47,7 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit(){
-    this.userService.registerUser(this.form.value.email,this.form.value.password,this.form.value.name)
+    this.userService.registerUser(this.form.value.email,this.form.value.password,this.form.value.userName)
       .then(() => {
         console.log('Exito en la autenticación');
         this.router.navigate(['pokedex']);

@@ -13,6 +13,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class UserService {
   user: any;
+  users!: User[];
   constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone, public http: HttpClient) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -32,18 +33,13 @@ export class UserService {
 
   registerUser(emailP, password, nameP) {
     const a = this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
+    console.log(nameP);
     const user : User = {name : nameP, email: emailP, photo:""};
     this.setUserData(user);
     return a;
   }
 
   setUserData(user) {
-    const userData: User = {
-      name: user.name,
-      email: user.email,
-      photo: user.photo
-    };
-
     this.http.post("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", user).subscribe(
         response=>console.log("Usuario creado: " + user),
         error=> console.log("Error: " + error),
@@ -64,24 +60,24 @@ export class UserService {
   }
 
   getUserByEmail(emailP): User {
-    let users;
     this.conseguirUsuarios().subscribe(
         (response: User[]) => {
-        users = response;
-        console.log(users);
-        console.log("hola");
-        for(let i=0;i<users.length;i++){
-          console.log("hola");
-          if(emailP==users[i].email){
-            console.log(users[i]);
-            return users[i];
-          }
-        }
+        this.users = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+    for(let i=0;i<this.users.length;i++){
+      console.log("hola");
+      console.log(this.users[i]);
+      console.log(emailP);
+      if(emailP==this.users[i].email){
+        console.log(this.users[i]);
+        console.log("SI");
+        return this.users[i];
+      }
+    }
     return null;
   }
 
