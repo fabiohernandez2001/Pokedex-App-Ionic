@@ -72,7 +72,7 @@ INSERT INTO ${this.db_table} (favorito) VALUES ('${fav}')`, [])
 
   private getAllFavs() {
     return this.dbInstance.executeSql(`
-SELECT * FROM ${this.db_table}`, []).then((res) => {
+SELECT favorito FROM ${this.db_table}`, []).then((res) => {
       this.users = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
@@ -84,6 +84,4 @@ SELECT * FROM ${this.db_table}`, []).then((res) => {
       alert(JSON.stringify(e));
     });
   }
-
-
 }
