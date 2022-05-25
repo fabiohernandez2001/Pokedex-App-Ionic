@@ -1,5 +1,7 @@
 export class User {
   name: string;
-  email: string;
-  photo: string;
+  public email: string;
+  public photo!: string;
+
 }
+

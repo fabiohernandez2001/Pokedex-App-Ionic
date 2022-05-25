@@ -13,7 +13,7 @@ export class ProfilePage implements OnInit {
 
   user!: User;
   form! : FormGroup;
-  
+
   constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -21,6 +21,7 @@ export class ProfilePage implements OnInit {
     if(!this.userService.isLoggedIn){
       this.router.navigate(["/login"]);
     } else{
+      console.log(JSON.parse(localStorage.getItem('user')).email);
       this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
       this.form=this.initForm();
     }
@@ -36,6 +37,7 @@ export class ProfilePage implements OnInit {
   }
 
   initForm():FormGroup{
+    console.log(this.user);
     return this.formBuilder.group({
       userName:[this.user.name, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
