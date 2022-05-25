@@ -5,10 +5,11 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
   providedIn: 'root'
 })
 export class SqlService{
+  public fav: string[]=[];
   private dbInstance: SQLiteObject;
-  db_name = 'remotestack.db';
-  db_table = 'favoritos';
-  fav: string[]=[];
+  private db_name = 'remotestack.db';
+  private db_table = 'favoritos';
+
   constructor(private platform: Platform, private sqlite: SQLite) {
     this.databaseConn();
   }
@@ -31,47 +32,45 @@ export class SqlService{
     });
   }
   public getFav(fav){
-    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table} WHERE favorito = ${fav};`, []).then((res)=>{
+    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table} WHERE favorito = ${fav}`, []).then((res)=>{
       this.fav = [];
       if (res.rows.length > 0) {
-        for (let i = 0; i < res.rows.length; i++) {
-          this.fav.push(res.rows.item(i));
-        }
+        alert(JSON.stringify('funciona el get'));
+        this.fav.push(res.rows.item(0));
         return this.fav;
       }
     }).catch(e => {
-      alert(JSON.stringify(this.fav+e.error()));
+      alert(JSON.stringify('no va'));
     });
   }
-  deleteFav(favorito) {
-    this.dbInstance.executeSql(`DELETE FROM ${this.db_table} WHERE favorito == ${favorito};`, [])
+  deleteFav(fav) {
+    this.dbInstance.executeSql(`DELETE FROM ${this.db_table} WHERE favorito = ${fav}`, [])
       .then(() => {
-        alert('User deleted!');
+        alert(JSON.stringify('fav deleted!'));
       })
       .catch(e => {
-        alert(JSON.stringify(e));
+        alert(JSON.stringify('no av el delete'));
       });
   }
   public addFav(fav) {
 // validation
     if (!fav.length) {
-      alert('Provide both email & name');
+      alert(JSON.stringify('No hay fav'));
       return;
     }
-    this.dbInstance.executeSql(`INSERT INTO ${this.db_table} (favorito) VALUES ('${fav}');`, [])
+    return this.dbInstance.executeSql(`INSERT INTO ${this.db_table} (favorito) VALUES (?)`, [fav])
       .then(() => {
-        alert('Success');
-        this.getAllFavs();
-      }, (err) => { alert(JSON.stringify(err.err)); });
+        alert(JSON.stringify('funciona el add'));
+      }).catch( err => { alert(JSON.stringify(err)); });
   }
 
   private getAllFavs() {
-    return this.dbInstance.executeSql(`
-SELECT favorito FROM ${this.db_table};`, []).then((res) =>{
+    return this.dbInstance.executeSql(`SELECT* favorito FROM ${this.db_table};`, []).then((res) =>{
       this.fav = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
           this.fav.push(res.rows.item(i));
+          alert(JSON.stringify('Funciona el getall'));
         }
         return this.fav;
       }
