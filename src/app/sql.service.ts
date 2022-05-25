@@ -24,7 +24,6 @@ export class SqlService{
               alert(JSON.stringify('funciona'));
             })
             .catch((error) => {
-              alert(JSON.stringify(error));
               alert(JSON.stringify('no funciona la senctencia'));
             });
         })
