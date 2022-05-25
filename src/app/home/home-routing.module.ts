@@ -29,8 +29,16 @@ const routes: Routes = [
     loadChildren: () => import('../itemdex/itemdex.module').then( m => m.ItemdexPageModule)
   },
   {
-    path: 'type-calcultor',
+    path: 'type-calculator',
     loadChildren: () => import('../type-calculator/type-calculator.module').then( m => m.TypeCalculatorPageModule)
+  },
+  {
+    path: 'favorite',
+    loadChildren: () => import('../favorite/favorite.module').then( m => m.FavoritePageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('../user/profile/profile.module').then( m => m.ProfilePageModule)
   }
 ];
 

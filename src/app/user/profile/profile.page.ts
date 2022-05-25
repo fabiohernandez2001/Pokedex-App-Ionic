@@ -35,7 +35,7 @@ export class ProfilePage implements OnInit {
     }
     this.form = this.initForm();*/
     //this.form = this.initForm();
-    
+
   }
 
   signOut(){

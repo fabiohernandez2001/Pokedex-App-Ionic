@@ -25,13 +25,12 @@ export class PokeCollapsePage implements OnInit {
   ngOnInit() {
     this.getPokedex();
     const userid = this.userService.isLoggedIn;
-    if(userid){
-      this.path='profile';
-    }else{
-      console.log(userid);
-      this.path='login';
-    }
   }
+
+  route(path){
+    this.router.navigate([path]);
+  }
+
   public getPokedex(): void {
     this.pokedexService.getPokedex().subscribe(
       (response: Pokemon[]) => {
