@@ -13,7 +13,7 @@ export class ProfilePage implements OnInit {
 
   user!: User;
   form! : FormGroup;
-  
+
   constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
     if(!this.userService.isLoggedIn){
       this.router.navigate(["/login"]);
     } else{
-      console.log(this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email));
+      console.log(JSON.parse(localStorage.getItem('user')).email);
       this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
       this.form=this.initForm();
     }

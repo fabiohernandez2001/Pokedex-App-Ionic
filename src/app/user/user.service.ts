@@ -34,7 +34,7 @@ export class UserService {
   registerUser(emailP, password, nameP) {
     const a = this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
     console.log(nameP);
-    const user : User = {name : nameP, email: emailP, photo:""};
+    const user: User = {name : nameP, email: emailP, photo:""};
     this.setUserData(user);
     return a;
   }
@@ -61,23 +61,24 @@ export class UserService {
 
   getUserByEmail(emailP): User {
     this.conseguirUsuarios().subscribe(
-        (response: User[]) => {
+        (response) => {
         this.users = response;
+          console.log(this.users);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-    for(let i=0;i<this.users.length;i++){
+    this.users.forEach( (userid)=>{
       console.log("hola");
-      console.log(this.users[i]);
+      console.log(userid);
       console.log(emailP);
-      if(emailP==this.users[i].email){
-        console.log(this.users[i]);
+      if(emailP===userid.email){
+        console.log(userid);
         console.log("SI");
-        return this.users[i];
+        return this.user;
       }
-    }
+    });
     return null;
   }
 
