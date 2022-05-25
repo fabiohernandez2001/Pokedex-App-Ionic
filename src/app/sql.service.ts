@@ -7,9 +7,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 export class SqlService {
   private dbInstance: SQLiteObject;
   db_name = 'remotestack.db';
+  // eslint-disable-next-line @typescript-eslint/member-ordering,@typescript-eslint/naming-convention
   db_table = 'favoritos';
-  users: Array<any>;
-
+  fav:string[]=[];
   constructor(private platform: Platform, private sqlite: SQLite) {
     this.databaseConn();
   }
@@ -20,9 +20,9 @@ export class SqlService {
         .then((sqLite: SQLiteObject) => {
           this.dbInstance = sqLite;
           sqLite.executeSql(`
-CREATE TABLE IF NOT EXISTS ${this.db_table} (
+CREATE TABLE [IF NOT EXISTS] ${this.db_table} (
 fav_id INTEGER PRIMARY KEY AUTOINCREMENT,
-favorito text NOT NULL`, [])
+favorito text NOT NULL)`, [])
             .then((res) => {
               alert(JSON.stringify(res));
             })
@@ -34,12 +34,12 @@ favorito text NOT NULL`, [])
   public getFav(fav){
     return this.dbInstance.executeSql(`
 SELECT * FROM ${this.db_table} WHERE favorito = ${fav}\``, []).then((res) => {
-      this.users = [];
+      this.fav = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
-          this.users.push(res.rows.item(i));
+          this.fav.push(res.rows.item(i));
         }
-        return this.users;
+        return this.fav;
       }
     },(e) => {
       alert(JSON.stringify(e));
@@ -73,12 +73,12 @@ INSERT INTO ${this.db_table} (favorito) VALUES ('${fav}')`, [])
   private getAllFavs() {
     return this.dbInstance.executeSql(`
 SELECT favorito FROM ${this.db_table}`, []).then((res) => {
-      this.users = [];
+      this.fav = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
-          this.users.push(res.rows.item(i));
+          this.fav.push(res.rows.item(i));
         }
-        return this.users;
+        return this.fav;
       }
     },(e) => {
       alert(JSON.stringify(e));
