@@ -53,21 +53,23 @@ export class UserService {
   }
 
   getUserByEmail(emailP): User {
+    let user: User;
     this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
         (response:User[]) => {
-        console.log(response);
         for(let i=0;i< response.length;i++){
-          console.log(response[i]);
           if(emailP==response[i].email){
             console.log("SI");
-            return response[i];
+            user = response[i];
+            //console.log(user);
+            //return user;
           }
         }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       });
-      return null;
+    let user2: User = {name: "", email: "", photo: ""};
+    return user2;
     }
 
   setUserData(user) {

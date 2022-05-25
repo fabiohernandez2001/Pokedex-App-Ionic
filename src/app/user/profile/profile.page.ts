@@ -3,6 +3,7 @@ import {User} from '../user';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -14,15 +15,25 @@ export class ProfilePage implements OnInit {
   user!: User;
   form! : FormGroup;
 
-  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
+  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
     if(!this.userService.isLoggedIn){
       this.router.navigate(["/login"]);
     } else{
-      console.log(JSON.parse(localStorage.getItem('user')).email);
-      this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
-      console.log( this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email));
+      let emailP = JSON.parse(localStorage.getItem('user')).email;
+      this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+        (response:User[]) => {
+        for(let i=0;i< response.length;i++){
+          if(emailP==response[i].email){
+            //console.log("SI");
+            this.user = response[i];
+            //console.log(this.user);
+          }
+        }
+      });
+      //this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
+      console.log(this.user);
       this.form=this.initForm();
     }
   }
