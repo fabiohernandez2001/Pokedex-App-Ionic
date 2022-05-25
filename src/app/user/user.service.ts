@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
 } from '@angular/fire/compat/firestore';
+
 import {User} from './user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable({
@@ -12,7 +13,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class UserService {
   user: any;
-  users!: User[];
+  users!: Object[];
   constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone, public http: HttpClient) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -33,15 +34,15 @@ export class UserService {
   registerUser(emailP, password, nameP) {
     const a = this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
     console.log(nameP);
-    const user: User = {name : nameP, email: emailP, photo:''};
+    const user: User = {name : nameP, email: emailP, photo:""};
     this.setUserData(user);
     return a;
   }
 
   setUserData(user) {
-    this.http.post('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json', user).subscribe(
-        response=>console.log('Usuario creado: ' + user),
-        error=> console.log('Error: ' + error),
+    this.http.post(`https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users/${this.getNumberArray() + 1}`, user).subscribe(
+        response=>console.log("Usuario creado: " + user),
+        error=> console.log("Error: " + error),
     );
     return;
   }
@@ -60,46 +61,38 @@ export class UserService {
 
   getUserByEmail(emailP): User {
     this.conseguirUsuarios().subscribe(
-        (response) => {
-        this.users = response;
-          console.log(this.users);
-          console.log(response);
-          console.log(typeof this.users);
-          const usuarios=this.users.toString().split(',');
-          for(let i=0;0<usuarios.length;i++){
-            const contenido=usuarios[i].split(': {')[1];
-            for(const element of contenido){
-              console.log('hola');
-              console.log(element);
-              console.log(emailP);
-              if(emailP===element){
-                console.log(element);
-                console.log('SI');
-
-              }
-            }
+        (response:any[]) => {
+        console.log(response);
+        for(let i=0;i<this.users.length;i++){
+          if(emailP==this.users[i]){
+            return this.users[i];
           }
-          /*
-          for(const element of iter){
-            console.log("hola");
-            console.log(element);
-            console.log(emailP);
-            if(emailP===element){
-              console.log(element);
-              console.log("SI");
-              return this.user;
-            }
-          };*/
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      });
+      return null;
+    };
+
+  conseguirUsuarios() {
+    return this.http.get<any[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+  }
+
+  getNumberArray(){
+    this.conseguirUsuarios().subscribe(
+      (response :any[]) => {
+        if (response == null){
+          return 0;
+        }else{
+          console.log(response.length);
+          return response.length;
+        }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-
-    return null;
-  }
-
-  conseguirUsuarios() {
-    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+    return 0;
   }
 }

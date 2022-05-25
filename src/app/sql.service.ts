@@ -15,7 +15,7 @@ export class SqlService {
   }
 
   databaseConn() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then((rd) => {
       this.sqlite.create({name: this.db_name, location: 'default'})
         .then((sqLite: SQLiteObject) => {
           this.dbInstance = sqLite;
@@ -29,6 +29,20 @@ favorito varchar(255) NOT NULL`, [])
             .catch((error) => alert(JSON.stringify(error)));
         })
         .catch((error) => alert(JSON.stringify(error)));
+    });
+  }
+  public getFav(fav){
+    return this.dbInstance.executeSql(`
+SELECT * FROM ${this.db_table} WHERE favorito = ${fav}\``, []).then((res) => {
+      this.users = [];
+      if (res.rows.length > 0) {
+        for (let i = 0; i < res.rows.length; i++) {
+          this.users.push(res.rows.item(i));
+        }
+        return this.users;
+      }
+    },(e) => {
+      alert(JSON.stringify(e));
     });
   }
   deleteFav(favorito) {
@@ -70,5 +84,6 @@ SELECT * FROM ${this.db_table}`, []).then((res) => {
       alert(JSON.stringify(e));
     });
   }
+
 
 }
