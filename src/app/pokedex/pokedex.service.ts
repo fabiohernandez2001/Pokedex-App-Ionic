@@ -5,6 +5,7 @@ import { Pokemon } from './pokemon';
 import {Ability} from "../abilitydex/ability";
 import {Nature} from "../naturedex/nature";
 import {Move} from "../movedex/move";
+import {Item} from "../itemdex/item";
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class PokedexService {
 
   public getMoves(): Observable<Move[]> {
     return this.http.get<Move[]>(`${this.apiServerUrl}moves.json`);
+  }
+
+  public getItems(): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.apiServerUrl}items.json`);
   }
 }

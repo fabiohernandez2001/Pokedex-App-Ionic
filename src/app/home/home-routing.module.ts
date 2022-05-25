@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'movedex',
     loadChildren: () => import('../movedex/movedex.module').then( m => m.MovedexPageModule)
+  },
+  {
+    path: 'itemdex',
+    loadChildren: () => import('../itemdex/itemdex.module').then( m => m.ItemdexPageModule)
   }
 ];
 
