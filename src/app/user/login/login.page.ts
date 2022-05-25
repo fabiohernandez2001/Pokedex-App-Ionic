@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
+import {User} from "../user";
+import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -9,9 +11,22 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
 })
 export class LoginPage implements OnInit {
 
+  users: User[];
+
   constructor(public userService: UserService, public router: Router, public afStore: AngularFirestore) { }
 
   ngOnInit() {
+  }
+
+  public getAllUsers() {
+    this.userService.getAllUsers().subscribe(
+      (response: User[]) => {
+        this.users = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   logIn(email, password) {
@@ -26,6 +41,8 @@ export class LoginPage implements OnInit {
       }).catch((error) => {
         window.alert(error.message);
       });
+    this.getAllUsers();
+    this.userService.setUsers(this.users);
   }
 
 }

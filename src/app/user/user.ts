@@ -1,7 +1,7 @@
 export class User {
-  public name!: string;
   public email: string;
-  public photo!: string;
+  public name: string;
+  public photo: string;
 
 }
 

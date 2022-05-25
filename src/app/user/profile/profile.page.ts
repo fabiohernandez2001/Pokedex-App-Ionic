@@ -3,6 +3,9 @@ import {User} from '../user';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {waitForAsync} from "@angular/core/testing";
+import {Pokemon} from "../../pokedex/pokemon";
 
 @Component({
   selector: 'app-profile',
@@ -11,19 +14,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProfilePage implements OnInit {
 
-  user!: User;
-  form! : FormGroup;
+  public users: User[];
+  public user!: User;
+  public form! : FormGroup;
 
-  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
+  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder, public http: HttpClient) { }
 
-  ngOnInit() {
-    if(!this.userService.isLoggedIn){
+  async ngOnInit() {
+    if (!this.userService.isLoggedIn) {
       this.router.navigate(["/login"]);
-    } else{
-      console.log(JSON.parse(localStorage.getItem('user')).email);
-      this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
-      console.log( this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email));
-      this.form=this.initForm();
+    } else {
+      this.users = this.userService.getUsers();
+      for (let i = 0; i < this.users.length; i++) {
+        console.log(JSON.parse(localStorage.getItem('user')).name);
+        if (this.users[i].email == JSON.parse(localStorage.getItem('user')).email)  {
+          this.user = this.users[i];
+        }
+      }
+      this.form = this.initForm();
     }
   }
 
