@@ -31,7 +31,7 @@ export class SqlService{
     });
   }
   public getFav(fav){
-    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table} WHERE favorito = ${fav};`, []).then((res) => {
+    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table} WHERE favorito = ${fav};`, []).then((res)=>{
       this.fav = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
@@ -39,8 +39,8 @@ export class SqlService{
         }
         return this.fav;
       }
-    },(e) => {
-      alert(JSON.stringify(e));
+    }).catch(e => {
+      alert(JSON.stringify(this.fav+e.error()));
     });
   }
   deleteFav(favorito) {
