@@ -5,7 +5,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
 } from '@angular/fire/compat/firestore';
-
 import {User} from './user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable({
@@ -34,15 +33,15 @@ export class UserService {
   registerUser(emailP, password, nameP) {
     const a = this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
     console.log(nameP);
-    const user: User = {name : nameP, email: emailP, photo:""};
+    const user: User = {name : nameP, email: emailP, photo:''};
     this.setUserData(user);
     return a;
   }
 
   setUserData(user) {
-    this.http.post("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", user).subscribe(
-        response=>console.log("Usuario creado: " + user),
-        error=> console.log("Error: " + error),
+    this.http.post('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json', user).subscribe(
+        response=>console.log('Usuario creado: ' + user),
+        error=> console.log('Error: ' + error),
     );
     return;
   }
@@ -64,21 +63,39 @@ export class UserService {
         (response) => {
         this.users = response;
           console.log(this.users);
+          console.log(response);
+          console.log(typeof this.users);
+          const usuarios=this.users.toString().split(',');
+          for(let i=0;0<usuarios.length;i++){
+            const contenido=usuarios[i].split(': {')[1];
+            for(const element of contenido){
+              console.log('hola');
+              console.log(element);
+              console.log(emailP);
+              if(emailP===element){
+                console.log(element);
+                console.log('SI');
+
+              }
+            }
+          }
+          /*
+          for(const element of iter){
+            console.log("hola");
+            console.log(element);
+            console.log(emailP);
+            if(emailP===element){
+              console.log(element);
+              console.log("SI");
+              return this.user;
+            }
+          };*/
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-    this.users.forEach( (userid)=>{
-      console.log("hola");
-      console.log(userid);
-      console.log(emailP);
-      if(emailP===userid.email){
-        console.log(userid);
-        console.log("SI");
-        return this.user;
-      }
-    });
+
     return null;
   }
 
