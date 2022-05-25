@@ -3,6 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="change()">
+        <ion-icon *ngIf="!isfav" name="star-outline"></ion-icon>
+        <ion-icon *ngIf="isfav" name="star-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       <ion-label>
         <img src="https://img.pokemondb.net/sprites/sword-shield/icon/{{pokemon.name.toLowerCase().replace(' ', '-').replace('.', '').replace('\'', '').replace(':', '').replace('é', 'e').replace('é', 'e')}}.png">
