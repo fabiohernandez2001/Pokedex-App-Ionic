@@ -13,7 +13,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class UserService {
   user: any;
-  users!: User[];
+  users!: Object[];
   constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone, public http: HttpClient) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -40,7 +40,7 @@ export class UserService {
   }
 
   setUserData(user) {
-    this.http.post("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", user).subscribe(
+    this.http.post(`https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users/${this.getNumberArray() + 1}`, user).subscribe(
         response=>console.log("Usuario creado: " + user),
         error=> console.log("Error: " + error),
     );
@@ -61,28 +61,38 @@ export class UserService {
 
   getUserByEmail(emailP): User {
     this.conseguirUsuarios().subscribe(
-        (response) => {
-        this.users = response;
-          console.log(this.users);
+        (response:any[]) => {
+        console.log(response);
+        for(let i=0;i<this.users.length;i++){
+          if(emailP==this.users[i]){
+            return this.users[i];
+          }
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      });
+      return null;
+    };
+
+  conseguirUsuarios() {
+    return this.http.get<any[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+  }
+
+  getNumberArray(){
+    this.conseguirUsuarios().subscribe(
+      (response:any[]) => {
+        if (response == null){
+          return 0;
+        }else{
+          console.log(response.length);
+          return response.length;
+        }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
-    this.users.forEach( (userid)=>{
-      console.log("hola");
-      console.log(userid);
-      console.log(emailP);
-      if(emailP===userid.email){
-        console.log(userid);
-        console.log("SI");
-        return this.user;
-      }
-    });
-    return null;
-  }
-
-  conseguirUsuarios() {
-    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+    return 0;
   }
 }
