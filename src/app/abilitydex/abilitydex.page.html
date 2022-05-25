@@ -1,3 +1,9 @@
+<style>
+  .pokeball {
+    background: linear-gradient(to bottom, #d9534f 50%, white 50%);
+  }
+</style>
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -10,7 +16,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" class="rounded-3 border border-2 border-dark bg-white" *ngFor="let ability of abilities">
+      <ion-col size="6" class="rounded-3 border border-2 border-dark text-center pokeball" *ngFor="let ability of abilities">
         <span class="fs-6"><i><b> {{ability.name}}</b></i></span>
         <hr>
         <span class="fs-6"> {{ability.description}}</span>

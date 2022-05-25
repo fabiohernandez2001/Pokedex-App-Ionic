@@ -34,6 +34,14 @@ const routes: Routes = [
     path: 'abilitydex',
     loadChildren: () => import('./abilitydex/abilitydex.module').then( m => m.AbilitydexPageModule)
   },
+  {
+    path: 'naturedex',
+    loadChildren: () => import('./naturedex/naturedex.module').then( m => m.NaturedexPageModule)
+  },
+  {
+    path: 'movedex',
+    loadChildren: () => import('./movedex/movedex.module').then( m => m.MovedexPageModule)
+  },
 
 
 ];

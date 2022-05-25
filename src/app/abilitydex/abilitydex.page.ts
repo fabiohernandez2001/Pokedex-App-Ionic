@@ -32,8 +32,4 @@ export class AbilitydexPage implements OnInit {
       }
     );
   }
-
-  public changeNames(ability: Ability) {
-    this.pokedexService.setAbilitySelected(ability);
-  }
 }

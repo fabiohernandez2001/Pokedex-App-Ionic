@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pokemon } from './pokemon';
 import {Ability} from "../abilitydex/ability";
+import {Nature} from "../naturedex/nature";
+import {Move} from "../movedex/move";
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +32,11 @@ export class PokedexService {
     return this.http.get<Ability[]>(`${this.apiServerUrl}abilities.json`);
   }
 
-  public setAbilitySelected(ability: Ability): void {
-    this.abilitySelected = ability;
+  public getNatures(): Observable<Nature[]> {
+    return this.http.get<Nature[]>(`${this.apiServerUrl}natures.json`);
   }
 
-  public getAbilitySelected(): Ability {
-    return this.abilitySelected;
+  public getMoves(): Observable<Move[]> {
+    return this.http.get<Move[]>(`${this.apiServerUrl}moves.json`);
   }
 }
