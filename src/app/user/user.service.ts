@@ -95,4 +95,9 @@ export class UserService {
     );
     return 0;
   }
+  addUser(user){
+    this.conseguirUsuarios().subscribe(
+
+    );
+  }
 }

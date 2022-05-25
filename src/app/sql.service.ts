@@ -15,13 +15,13 @@ export class SqlService {
   }
 
   databaseConn() {
-    this.platform.ready().then((rd) => {
+    this.platform.ready().then(() => {
       this.sqlite.create({name: this.db_name, location: 'default'})
         .then((sqLite: SQLiteObject) => {
           this.dbInstance = sqLite;
           sqLite.executeSql(`
 CREATE TABLE IF NOT EXISTS ${this.db_table} (
-fav_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+fav_id INTEGER PRIMARY KEY AUTOINCREMENT,
 favorito varchar(255) NOT NULL`, [])
             .then((res) => {
               alert(JSON.stringify(res));
