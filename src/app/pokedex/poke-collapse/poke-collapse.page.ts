@@ -18,6 +18,7 @@ export class PokeCollapsePage implements OnInit {
   public pokedex: Pokemon[] | undefined;
   public environ = environment;
   private logged!: boolean;
+  private path: string;
   constructor(private pokedexService: PokedexService, public afStore: AngularFirestore,private router: Router){}
 
   ngOnInit() {
@@ -25,11 +26,19 @@ export class PokeCollapsePage implements OnInit {
     const userid=JSON.parse(localStorage.getItem('user'));
     if(userid){
       this.logged=true;
+      this.path='profile';
     }else{
       this.logged=false;
+      console.log(userid);
+      this.path='login';
     }
   }
-
+  log(){
+    return this.logged;
+  }
+  route(){
+    this.router.navigate([this.path]);
+  }
   public getPokedex(): void {
     this.pokedexService.getPokedex().subscribe(
       (response: Pokemon[]) => {

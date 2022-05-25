@@ -13,4 +13,5 @@ export class PokedexPage {
   onChanges(name: string) {
     this.selected = name;
   }
+
 }

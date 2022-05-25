@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
     if(!this.userService.isLoggedIn){
       this.router.navigate(["/login"]);
     } else{
-      this.user=JSON.parse(localStorage.getItem('user'));
+      this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
       this.form=this.initForm();
     }
   }

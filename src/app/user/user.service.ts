@@ -4,13 +4,10 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 
 import {User} from './user';
-import { HttpClient } from '@angular/common/http';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,14 +32,18 @@ export class UserService {
 
   registerUser(emailP, password, nameP) {
     const a = this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
-
+    const user: User = {name : nameP, email: emailP, photo:''};
+    this.setUserData(user);
     return a;
   }
 
   setUserData(user) {
-    /*const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
-      `users/${user.uid}`
-    );*/
+    const userData: User = {
+      name: user.name,
+      email: user.email,
+      photo: user.photo
+    };
+
     this.http.post('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json', user).subscribe(
         response=>console.log('Usuario creado: ' + user),
         error=> console.log('Error: ' + error),
@@ -57,9 +58,34 @@ export class UserService {
     });
   }
 
-  isLoggedIn(): boolean {
+  get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return user !== null;
   }
 
+  getUserByEmail(emailP): User {
+    let users: User[];
+    this.conseguirUsuarios().subscribe(
+        (response: User[]) => {
+        users = response;
+        console.log(users);
+        console.log('hola');
+        for(let i=0;i<users.length;i++){
+          console.log('hola');
+          if(emailP===users[i].email){
+            console.log(users[i]);
+            return users[i];
+          }
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+    return null;
+  }
+
+  conseguirUsuarios() {
+    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+  }
 }
