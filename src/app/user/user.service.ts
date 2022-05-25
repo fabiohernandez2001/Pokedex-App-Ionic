@@ -11,6 +11,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
   user: any;
   users!: Object[];
@@ -39,14 +40,6 @@ export class UserService {
     return a;
   }
 
-  setUserData(user) {
-    this.http.post(`https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users/${this.getNumberArray() + 1}`, user).subscribe(
-        response=>console.log("Usuario creado: " + user),
-        error=> console.log("Error: " + error),
-    );
-    return;
-  }
-
   signOut() {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
@@ -60,12 +53,14 @@ export class UserService {
   }
 
   getUserByEmail(emailP): User {
-    this.conseguirUsuarios().subscribe(
-        (response:any[]) => {
+    this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+        (response:User[]) => {
         console.log(response);
-        for(let i=0;i<this.users.length;i++){
-          if(emailP==this.users[i]){
-            return this.users[i];
+        for(let i=0;i< response.length;i++){
+          console.log(response[i]);
+          if(emailP==response[i].email){
+            console.log("SI");
+            return response[i];
           }
         }
       },
@@ -73,26 +68,27 @@ export class UserService {
         alert(error.message);
       });
       return null;
-    };
+    }
 
-  conseguirUsuarios() {
-    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json')
-  }
-
-  getNumberArray(){
-    this.conseguirUsuarios().subscribe(
-      (response :any[]) => {
-        if (response == null){
-          return 0;
+  setUserData(user) {
+    this.http.get<any[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+      (response : any[]) => {
+        if (response != null){
+          response.push(user);
+          return this.http.put("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", response).subscribe(
+            response=>console.log("Usuario creado: " + user),
+            error=> console.log("Error: " + error),
+          );
         }else{
-          console.log(response.length);
-          return response.length;
-        }
-      },
+          user = { 0 : user};
+          return this.http.put("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", user).subscribe(
+            response=>console.log("Usuario creado: " + user),
+            error=> console.log("Error: " + error),
+        );}
+        },
       (error: HttpErrorResponse) => {
         alert(error.message);
-      }
-    );
-    return 0;
+      });
+    return null;
   }
 }

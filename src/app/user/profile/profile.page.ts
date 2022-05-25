@@ -17,12 +17,12 @@ export class ProfilePage implements OnInit {
   constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    console.log(this.userService.isLoggedIn);
     if(!this.userService.isLoggedIn){
       this.router.navigate(["/login"]);
     } else{
       console.log(JSON.parse(localStorage.getItem('user')).email);
       this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
+      console.log( this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email));
       this.form=this.initForm();
     }
   }
