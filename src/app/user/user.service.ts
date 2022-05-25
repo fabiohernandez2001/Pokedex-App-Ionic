@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
 } from '@angular/fire/compat/firestore';
-
+import { environment } from '../../environments/environment';
 import {User} from './user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -143,4 +143,19 @@ export class UserService {
       });
     return null;
   }
+
+  /*uploadImage(imageURI) {
+    return new Promise<any>((resolve, reject) => {
+      let storageRef = environment.firebaseConfig.storage().ref();
+      let imageRef = storageRef.child('image').child('imageName');
+      this.encodeImageUri(imageURI, function(image64) {
+        imageRef.putString(image64, 'data_url')
+        .then(snapshot => {
+          resolve(snapshot.downloadURL)
+        }, err => {
+          reject(err);
+        })
+      })
+    })
+  }*/
 }

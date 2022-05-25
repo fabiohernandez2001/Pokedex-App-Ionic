@@ -20,22 +20,13 @@ export class ProfilePage implements OnInit {
   constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder, public http: HttpClient) { }
 
   ngOnInit() : void {
-    this.getUsers();
-    //this.user = this.getUserByEmail(localStorage.getItem('user'));
-      /*for (let i = 0; i < this.users.length; i++) {
-        console.log(JSON.parse(localStorage.getItem('user')).name);
-        setTimeout(() => { this.router.navigate(['/']);}, 5000);
-        if (this.users[i].email == JSON.parse(localStorage.getItem('user')).email)  {
-          this.user = this.users[i];
-        }
-      }*/
-    console.log(this.user);
-    /*while (this.user == null){
-      this.getUsers();
+    //this.getUsers();
+    if (!this.userService.isLoggedIn){
+      this.router.navigate(['login']);
     }
-    this.form = this.initForm();*/
-    //this.form = this.initForm();
-    
+    this.user = {name : "", email: JSON.parse(localStorage.getItem('user')).email, photo: ""};
+    //this.user.name = localStorage.getItem('user');
+    this.form = this.initForm();
   }
 
   signOut(){
@@ -50,8 +41,8 @@ export class ProfilePage implements OnInit {
   initForm():FormGroup{
     console.log(this.user);
     return this.formBuilder.group({
-      userName:[this.user.name, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
-      photo:[this.user.photo, []]
+      userName:["", [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+      photo:["", []]
     });
   }
 
@@ -69,18 +60,6 @@ export class ProfilePage implements OnInit {
     return null;
   }
 
-  /*get name(){
-    return this.form.value.userName;
-  }
-
-  get email(){
-    return this.form.value.email;
-  }
-
-  get passwd(){
-    return this.form.value.password;
-  }*/
-
   public getUsers(): void {
     this.userService.getpdw().subscribe(
       (response: User[]) => {
@@ -96,4 +75,7 @@ export class ProfilePage implements OnInit {
       }
     );
   }
+
+
+  
 }

@@ -30,7 +30,8 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
-  },  {
+  },
+  {
     path: 'abilitydex',
     loadChildren: () => import('./abilitydex/abilitydex.module').then( m => m.AbilitydexPageModule)
   },
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'type-calculator',
     loadChildren: () => import('./type-calculator/type-calculator.module').then( m => m.TypeCalculatorPageModule)
+  },
+  {
+    path: 'photo',
+    loadChildren: () => import('./photo/photo.module').then( m => m.PhotoPageModule)
   },
 
 

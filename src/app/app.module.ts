@@ -16,6 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SQLite} from '@ionic-native/sqlite/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { SplashScreen } from '@awesome-cordova-plugins/splash-screen/ngx';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,9 +36,16 @@ import {SQLite} from '@ionic-native/sqlite/ngx';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule
+    NgbModule, 
   ],
-  providers: [SQLite, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [SQLite,
+    StatusBar,
+    SplashScreen,
+    Crop,
+    ImagePicker,
+    File,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
