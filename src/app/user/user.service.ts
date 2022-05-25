@@ -9,6 +9,8 @@ import {
 
 import {User} from './user';
 import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,11 +33,9 @@ export class UserService {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
-  registerUser(email, password, nameP) {
-    const a = this.ngFireAuth.createUserWithEmailAndPassword(email, password);
-    const user=JSON.parse(localStorage.getItem('user'));
-    user.name = nameP;
-    this.setUserData(user);
+  registerUser(emailP, password, nameP) {
+    const a = this.ngFireAuth.createUserWithEmailAndPassword(emailP, password);
+
     return a;
   }
 
@@ -43,15 +43,9 @@ export class UserService {
     /*const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
       `users/${user.uid}`
     );*/
-    const userData: User = {
-      uid: user.uid,
-      name: user.name,
-      email: user.email,
-      photo: user.photo
-    };
-    this.http.post("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", user).subscribe(
-        response=>console.log("Usuario creado: " + user),
-        error=> console.log("Error: " + error),
+    this.http.post('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json', user).subscribe(
+        response=>console.log('Usuario creado: ' + user),
+        error=> console.log('Error: ' + error),
     );
     return;
   }
@@ -63,7 +57,7 @@ export class UserService {
     });
   }
 
-  get isLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return user !== null;
   }

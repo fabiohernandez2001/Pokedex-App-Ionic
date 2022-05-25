@@ -6,13 +6,11 @@
 </ion-header>
 
 <ion-content>
-      <ion-img  src="https://i.pinimg.com/originals/3c/a9/9a/3ca99aa52168e8680908bb4da67fcd11.jpg"></ion-img>
     <ion-item >
     <form [formGroup]="form" (ngSubmit) = "onSubmit()">
       <h1>Register</h1>
-
       <ion-item>
-        <ion-input type="text" placeholder="User name" formControlName="userName" class="rounded-3 p-3 col-9 my-2"></ion-input>
+        <ion-input type="text" placeholder="User name" formControlName="userName" ></ion-input>
         <ion-item class="alert alert-danger col-4 my-2" *ngIf="name?.['errors'] && (name?.['dirty'] || name?.['touched'])">
           <p *ngIf="name?.['errors']?.required">Name is required.</p>
           <p *ngIf="name?.['errors']?.['minLength'] || name?.['errors']?.['maxLength']">The name must be longer than {{name?.['errors']?.['minLength']?.['requiredLength']}} characters and shorter than {{name?.errors?.maxlength?.requiredLength}} characters.</p>
@@ -21,7 +19,7 @@
       <br>
 
       <ion-item class="row">
-        <ion-input type="email" placeholder="E-Mail" formControlName="email" class="rounded-3 p-3 col-8 my-2"></ion-input>
+        <ion-input type="email" placeholder="E-Mail" formControlName="email" ></ion-input>
         <ion-item class="alert alert-danger col-4 my-2" *ngIf=" email?.['errors'] && (email?.['dirty'] || email?.['touched'])">
           <p *ngIf="email?.['errors']?.required">E-Mail is required.</p>
           <p *ngIf="email?.['errors']?.email">E-Mail must be valid.</p>
@@ -30,7 +28,7 @@
       <br>
 
       <ion-item class="row">
-        <ion-input type="password" name="password" placeholder="Password" formControlName="password" class="rounded-3 p-3 col-8 my-2"></ion-input>
+        <ion-input type="password" name="password" placeholder="Password" formControlName="password"></ion-input>
         <ion-item  class="alert alert-danger col-4 my-2" *ngIf="passwd?.['errors'] && (passwd?.['dirty'] || passwd?.['touched'])">
           <p *ngIf="passwd?.['errors']?.required">Password is required.</p>
           <p *ngIf="passwd?.['errors']?.['minLength'] || passwd?.['errors']?.['maxLength']">The password must be longer than 6 characters and shorter than 30.</p>
@@ -39,12 +37,13 @@
       <br>
 
       <ion-item class="row">
-        <ion-input type="password" name="password" placeholder="Repeat the password" formControlName="repeatPassword" class="rounded-3 p-3 col-8 my-2"></ion-input>
+        <ion-input type="password" name="password" placeholder="Repeat the password" formControlName="repeatPassword" ></ion-input>
       </ion-item>
       <br>
         <ion-button type="submit" class="" [disabled]="form.invalid" >Register</ion-button>
     </form>
-    </ion-item>
+    <ion-img  src="https://i.pinimg.com/originals/3c/a9/9a/3ca99aa52168e8680908bb4da67fcd11.jpg"></ion-img>
+  </ion-item>
 </ion-content>
 <!--
 <ion-header>

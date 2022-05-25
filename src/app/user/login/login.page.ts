@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
-
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(public userService: UserService, public router: Router) { }
+  constructor(public userService: UserService, public router: Router, public afStore: AngularFirestore) { }
 
   ngOnInit() {
   }
