@@ -22,7 +22,7 @@ export class SqlService {
           sqLite.executeSql(`
 CREATE TABLE IF NOT EXISTS ${this.db_table} (
 fav_id INTEGER PRIMARY KEY AUTOINCREMENT,
-favorito varchar(255) NOT NULL`, [])
+favorito text NOT NULL`, [])
             .then((res) => {
               alert(JSON.stringify(res));
             })

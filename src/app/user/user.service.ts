@@ -40,10 +40,11 @@ export class UserService {
   }
 
   setUserData(user) {
-    this.http.post(`https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users/${this.getNumberArray() + 1}`, user).subscribe(
+    /*this.http.post(`https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users/${this.getNumberArray() + 1}`, user).subscribe(
         response=>console.log("Usuario creado: " + user),
         error=> console.log("Error: " + error),
-    );
+    );*/
+    let userArray=this.conseguirUsuarios();
     return;
   }
 
@@ -75,8 +76,14 @@ export class UserService {
       return null;
     };
 
-  conseguirUsuarios() {
-    return this.http.get<any[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+  conseguirUsuarios():User[] {
+    this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+      (response: User[]) =>{return response;},
+      (error: HttpErrorResponse) => {
+        return null;
+        alert(error.message);
+      }
+    );
   }
 
   getNumberArray(){
@@ -94,10 +101,5 @@ export class UserService {
       }
     );
     return 0;
-  }
-  addUser(user){
-    this.conseguirUsuarios().subscribe(
-
-    );
   }
 }
