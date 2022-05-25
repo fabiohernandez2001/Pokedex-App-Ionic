@@ -44,7 +44,7 @@ export class SqlService{
     });
   }
   deleteFav(favorito) {
-    this.dbInstance.executeSql(`DELETE FROM ${this.db_table} WHERE favorito = ${favorito};`, [])
+    this.dbInstance.executeSql(`DELETE FROM ${this.db_table} WHERE favorito == ${favorito};`, [])
       .then(() => {
         alert('User deleted!');
       })
