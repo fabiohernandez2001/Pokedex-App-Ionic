@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Type Calculator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Type 1</ion-label>
+      <ion-select [(ngModel)]="t1" (ionChange)="capturar()" >
+        <ion-select-option [value]="1">-</ion-select-option>
+        <ion-select-option [value]="type" *ngFor="let type of typeList">{{type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Type 2</ion-label>
+      <ion-select [(ngModel)]="t2" (ionChange)="capturar()">
+        <ion-select-option [value]="2">-</ion-select-option>
+        <ion-select-option [value]="type" *ngFor="let type of typeList">{{type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid class="bg-danger">
+    <ion-row class="text-center">
+      <ion-col size="3" *ngFor="let type of typeList; let i = index" class="rounded-3 border border-dark bg-white text-center">
+        <span class="fs-6"><b> {{type}}</b>: <i>x{{damagesRes[i]}}</i></span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list class="bg-danger p-2 fs-5">
+    <ion-item>
+      <p>This type combination has:</p>
+      <ion-list>
+        <ion-item  *ngIf="countRes[0] == 1">{{countRes[0]}} immunity (x0)</ion-item>
+        <ion-item  *ngIf="countRes[0] > 1 || countRes[0] == 0">{{countRes[0]}} immunities (x0)</ion-item>
+
+        <ion-item  *ngIf="countRes[1] == 1">{{countRes[1]}} double resistance (x0.25)</ion-item>
+        <ion-item  *ngIf="countRes[1] > 1 || countRes[1] == 0">{{countRes[1]}} double resistances (x0.25)</ion-item>
+
+        <ion-item  *ngIf="countRes[2] == 1">{{countRes[2]}} resistance (x0.5)</ion-item>
+        <ion-item  *ngIf="countRes[2] > 1 || countRes[2] == 0">{{countRes[2]}} resistances (x0.5)</ion-item>
+
+        <ion-item  *ngIf="countRes[3] == 1">{{countRes[3]}} neutral damage (x1)</ion-item>
+        <ion-item  *ngIf="countRes[3] > 1 || countRes[3] == 0">{{countRes[3]}} neutral damages (x1)</ion-item>
+
+        <ion-item  *ngIf="countRes[4] == 1">{{countRes[4]}} weakness (x2)</ion-item>
+        <ion-item  *ngIf="countRes[4] > 1 || countRes[4] == 0">{{countRes[4]}} weaknesses (x2)</ion-item>
+
+        <ion-item  *ngIf="countRes[5] == 1">{{countRes[5]}} double weakness (x4)</ion-item>
+        <ion-item  *ngIf="countRes[5] > 1 || countRes[5] == 0">{{countRes[5]}} double weaknesses (x4)</ion-item>
+      </ion-list>
+    </ion-item>
+  </ion-list>
+</ion-content>

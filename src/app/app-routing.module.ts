@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'itemdex',
     loadChildren: () => import('./itemdex/itemdex.module').then( m => m.ItemdexPageModule)
   },
+  {
+    path: 'type-calculator',
+    loadChildren: () => import('./type-calculator/type-calculator.module').then( m => m.TypeCalculatorPageModule)
+  },
 
 
 ];
