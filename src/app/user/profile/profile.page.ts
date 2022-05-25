@@ -27,6 +27,7 @@ export class ProfilePage implements OnInit {
       this.users = this.userService.getUsers();
       for (let i = 0; i < this.users.length; i++) {
         console.log(JSON.parse(localStorage.getItem('user')).name);
+        setTimeout(() => { this.router.navigate(['/']);}, 5000);
         if (this.users[i].email == JSON.parse(localStorage.getItem('user')).email)  {
           this.user = this.users[i];
         }

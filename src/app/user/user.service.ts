@@ -8,7 +8,7 @@ import {
 
 import {User} from './user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   user: any;
   users!: Object[];
+  allUsers: User[];
   constructor(public afStore: AngularFirestore, public ngFireAuth: AngularFireAuth, public router: Router, public ngZone: NgZone, public http: HttpClient) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -53,24 +54,22 @@ export class UserService {
     return user !== null;
   }
 
-  getUserByEmail(emailP): Observable<User> {
-    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+  async getUserByEmail(emailP) {
+    this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
         (response:User[]) => {
+        console.log(response);
         for(let i=0;i< response.length;i++){
+          console.log(response[i]);
           if(emailP==response[i].email){
             console.log("SI");
-            user = response[i];
-            //console.log(user);
-            return user;
+            return response[i];
           }
         }
-        return null;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       });
-    let user2: User = {name: "", email: "", photo: ""};
-    return user2;
+      return {email: "feo@feo.es", name: "feo", photo: ""};
     }
 
   setUserData(user) {
@@ -93,5 +92,17 @@ export class UserService {
         alert(error.message);
       });
     return null;
+  }
+
+  public getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json`);
+  }
+
+  public setUsers(users: User[]) {
+    this.allUsers = users;
+  }
+
+  public getUsers() {
+    return this.allUsers;
   }
 }

@@ -34,13 +34,13 @@
         </ion-item>
         <br>
 
-        <on-item class="row">
+        <ion-item class="row">
           <ion-input type="email" placeholder="E-Mail" formControlName="email" class="rounded-3 p-3 col-8 my-2"></ion-input>
           <ion-item class="alert alert-danger col-4 my-2" *ngIf=" email?.['errors'] && (email?.['dirty'] || email?.['touched'])">
             <p *ngIf="email?.['errors']?.required">E-Mail is required.</p>
             <p *ngIf="email?.['errors']?.email">E-Mail must be valid.</p>
           </ion-item>
-        </on-item>
+        </ion-item>
         <br>
 
         <ion-item class="row">
