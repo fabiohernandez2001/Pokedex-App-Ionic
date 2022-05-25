@@ -20,7 +20,7 @@ export class PokemonDetailPage implements OnInit{
   }
 
   addfav() {
-    this.sqlite.addFav(this.pokemon)
+    this.sqlite.addFav(this.pokemon);
   }
 
   isfav(){

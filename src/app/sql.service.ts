@@ -10,6 +10,9 @@ export class SqlService{
   db_table = 'favoritos';
   fav: string[]=[];
   constructor(private platform: Platform, private sqlite: SQLite) {
+    this.databaseConn();
+  }
+  databaseConn(){
     this.platform.ready().then(() => {
       this.sqlite.create({name: this.db_name, location: 'default'})
         .then((sqLite: SQLiteObject) => {
