@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'abilitydex',
+    loadChildren: () => import('./abilitydex/abilitydex.module').then( m => m.AbilitydexPageModule)
   },
+
 
 ];
 
