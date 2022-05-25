@@ -11,10 +11,6 @@ const routes: Routes = [
   {
     path: 'pokemon-detail',
     loadChildren: () => import('./pokemon-detail/pokemon-detail.module').then( m => m.PokemonDetailPageModule)
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('../../user/profile/profile.module').then( m => m.ProfilePageModule)
   }
 
 ];

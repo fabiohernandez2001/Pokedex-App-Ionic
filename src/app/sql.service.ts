@@ -31,22 +31,21 @@ export class SqlService{
         .catch((error) => alert(JSON.stringify(error)));
     });
   }
-  public getFav(fav){
-    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table} WHERE favorito = ${fav}`, []).then((res)=>{
-      this.fav = [];
-      if (res.rows.length > 0) {
-        alert(JSON.stringify('funciona el get'));
-        this.fav.push(res.rows.item(0));
-        return this.fav;
-      }
+  public getFav(fav: string){
+    let favoritos = '';
+    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table} WHERE favorito = ?`, [fav]).then((res)=>{
+      favoritos = res.rows.item(0);
+      return (favoritos != '');
     }).catch(e => {
       alert(JSON.stringify('no va'));
     });
+    return (favoritos != '');
   }
   deleteFav(fav) {
-    this.dbInstance.executeSql(`DELETE FROM ${this.db_table} WHERE favorito = ${fav}`, [])
+    this.dbInstance.executeSql(`DELETE FROM ${this.db_table} WHERE favorito = ?`, [fav])
       .then(() => {
         alert(JSON.stringify('fav deleted!'));
+        this.getAllFavs();
       })
       .catch(e => {
         alert(JSON.stringify('no av el delete'));
@@ -61,11 +60,12 @@ export class SqlService{
     return this.dbInstance.executeSql(`INSERT INTO ${this.db_table} (favorito) VALUES (?)`, [fav])
       .then(() => {
         alert(JSON.stringify('funciona el add'));
+        this.getAllFavs();
       }).catch( err => { alert(JSON.stringify(err)); });
   }
 
-  private getAllFavs() {
-    return this.dbInstance.executeSql(`SELECT* favorito FROM ${this.db_table};`, []).then((res) =>{
+  async getAllFavs() {
+    return this.dbInstance.executeSql(`SELECT * FROM ${this.db_table};`, []).then((res) =>{
       this.fav = [];
       if (res.rows.length > 0) {
         for (let i = 0; i < res.rows.length; i++) {
@@ -75,7 +75,7 @@ export class SqlService{
         return this.fav;
       }
     },(e) => {
-      alert(JSON.stringify(e));
+      alert(JSON.stringify('mierdaputa de getall delprofe'));
     });
   }
 }
