@@ -120,28 +120,27 @@ export class UserService {
     this.users =usuarios;
   }
 
-  public update(): void{
-    this.getpdw().subscribe(
-      (response: User[]) => {
-        this.users = response;
+  public getpdw() : Observable<User[]>{
+    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+  }
+
+  public update(user) : void{
+    this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+      (response : User[]) => {
+        for (let i = 0; i < response.length; i++){
+          if (user.email == response[i].email){
+            response[i].name = user.name;
+            response[i].photo = user.photo;
+          }
+        }
+        return this.http.put("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json", response).subscribe(
+          response=>console.log("Usuario actualizado: " + user),
+          error=> console.log("Error: " + error),
+        );
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
-      }
-    );
-    console.log(this.users);
-    /*this.users = this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
-      (response : User[]) => {
-          this.setUsers(response);
-          this.users = response;
-        },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
       });
-    console.log(this.users);*/
-  }
-
-  public getpdw() : Observable<User[]>{
-    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+    return null;
   }
 }

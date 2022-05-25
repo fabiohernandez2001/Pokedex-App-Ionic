@@ -1,4 +1,4 @@
-<!--
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -34,8 +34,11 @@
           </ion-item>
         </ion-item>
         <br>
+        <ion-item>
+          <ion-input type="text" placeholder="Photo" formControlName="photo" class="rounded-3 p-3 col-9 my-2"></ion-input>
+        </ion-item>
 
-        <ion-item class="row">
+        <!--<ion-item class="row">
           <ion-input type="email" placeholder="E-Mail" formControlName="email" class="rounded-3 p-3 col-8 my-2"></ion-input>
           <ion-item class="alert alert-danger col-4 my-2" *ngIf=" email?.['errors'] && (email?.['dirty'] || email?.['touched'])">
             <p *ngIf="email?.['errors']?.required">E-Mail is required.</p>
@@ -55,7 +58,7 @@
 
         <ion-item class="row">
           <ion-input type="password" name="password" placeholder="Repeat the password" formControlName="repeatPassword" class="rounded-3 p-3 col-8 my-2"></ion-input>
-        </ion-item>
+        </ion-item>-->
         <br>
 
         <ion-button type="submit" class="" [disabled]="form.invalid" >Register</ion-button>
@@ -63,5 +66,5 @@
     </ion-item>
   </ion-list>
 </ion-content>
--->
+
 

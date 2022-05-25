@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit {
       this.getUsers();
     }
     this.form = this.initForm();*/
-    this.form = this.initForm();
+    //this.form = this.initForm();
     
   }
 
@@ -51,14 +51,13 @@ export class ProfilePage implements OnInit {
     console.log(this.user);
     return this.formBuilder.group({
       userName:[this.user.name, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
-      email: [this.user.email, [Validators.required, Validators.email]],
+      photo:[this.user.photo, []]
     });
   }
 
   onSubmit() {
-    console.log(this.form.value.userName);
-    console.log(this.form.value.email);
+    const newUser: User = {name : this.form.value.userName, email: this.user.email, photo: this.form.value.photo};
+    this.userService.update(newUser);
   }
 
   public getUserByEmail(email : String) : User{
@@ -70,7 +69,7 @@ export class ProfilePage implements OnInit {
     return null;
   }
 
-  get name(){
+  /*get name(){
     return this.form.value.userName;
   }
 
@@ -80,17 +79,15 @@ export class ProfilePage implements OnInit {
 
   get passwd(){
     return this.form.value.password;
-  }
+  }*/
 
   public getUsers(): void {
     this.userService.getpdw().subscribe(
       (response: User[]) => {
-        console.log(response);
         this.users = response;
         for (let i = 0; i < this.users.length; i++){
           if (localStorage.getItem('user') == this.users[i].email){
             this.user = this.users[i];
-            console.log(this.user);
           }
         }
       },

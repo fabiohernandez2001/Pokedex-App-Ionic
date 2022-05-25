@@ -38,7 +38,6 @@ export class LoginPage implements OnInit {
           this.router.navigate(['dashboard']);
         }*/
         this.router.navigate(['pokedex']);
-        this.userService.update();
       }).catch((error) => {
         window.alert(error.message);
       });
