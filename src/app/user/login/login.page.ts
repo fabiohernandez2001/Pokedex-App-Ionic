@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {User} from "../user";
 import {HttpErrorResponse} from "@angular/common/http";
+import { threadId } from 'worker_threads';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -18,7 +19,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  public getAllUsers() {
+  /*public getAllUsers() {
     this.userService.getAllUsers().subscribe(
       (response: User[]) => {
         this.users = response;
@@ -27,7 +28,7 @@ export class LoginPage implements OnInit {
         alert(error.message);
       }
     );
-  }
+  }*/
 
   logIn(email, password) {
     this.userService.signIn(email.value, password.value)
@@ -37,12 +38,12 @@ export class LoginPage implements OnInit {
           this.router.navigate(['dashboard']);
         }*/
         this.router.navigate(['pokedex']);
-        console.log(res);
+        this.userService.update();
       }).catch((error) => {
         window.alert(error.message);
       });
-    this.getAllUsers();
-    this.userService.setUsers(this.users);
+    //this.getAllUsers();
+    //this.userService.setUsers(this.users);
   }
 
 }

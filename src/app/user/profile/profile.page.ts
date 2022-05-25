@@ -4,8 +4,7 @@ import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {waitForAsync} from "@angular/core/testing";
-import {Pokemon} from "../../pokedex/pokemon";
+
 
 @Component({
   selector: 'app-profile',
@@ -14,26 +13,29 @@ import {Pokemon} from "../../pokedex/pokemon";
 })
 export class ProfilePage implements OnInit {
 
-  public users: User[];
-  public user!: User;
+  public users: User[] | undefined;
+  public user!: User | undefined;
   public form! : FormGroup;
 
   constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder, public http: HttpClient) { }
 
-  async ngOnInit() {
-    if (!this.userService.isLoggedIn) {
-      this.router.navigate(["/login"]);
-    } else {
-      this.users = this.userService.getUsers();
-      for (let i = 0; i < this.users.length; i++) {
+  ngOnInit() : void {
+    this.getUsers();
+    //this.user = this.getUserByEmail(localStorage.getItem('user'));
+      /*for (let i = 0; i < this.users.length; i++) {
         console.log(JSON.parse(localStorage.getItem('user')).name);
         setTimeout(() => { this.router.navigate(['/']);}, 5000);
         if (this.users[i].email == JSON.parse(localStorage.getItem('user')).email)  {
           this.user = this.users[i];
         }
-      }
-      this.form = this.initForm();
+      }*/
+    console.log(this.user);
+    /*while (this.user == null){
+      this.getUsers();
     }
+    this.form = this.initForm();*/
+    this.form = this.initForm();
+    
   }
 
   signOut(){
@@ -59,6 +61,15 @@ export class ProfilePage implements OnInit {
     console.log(this.form.value.email);
   }
 
+  public getUserByEmail(email : String) : User{
+    for (let i = 0; i < this.users.length; i++){
+      if (email == this.users[i].email){
+        return this.users[i];
+      }
+    }
+    return null;
+  }
+
   get name(){
     return this.form.value.userName;
   }
@@ -69,5 +80,23 @@ export class ProfilePage implements OnInit {
 
   get passwd(){
     return this.form.value.password;
+  }
+
+  public getUsers(): void {
+    this.userService.getpdw().subscribe(
+      (response: User[]) => {
+        console.log(response);
+        this.users = response;
+        for (let i = 0; i < this.users.length; i++){
+          if (localStorage.getItem('user') == this.users[i].email){
+            this.user = this.users[i];
+            console.log(this.user);
+          }
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 }
