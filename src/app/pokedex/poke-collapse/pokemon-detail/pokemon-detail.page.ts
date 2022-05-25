@@ -25,6 +25,7 @@ export class PokemonDetailPage implements OnInit{
 
   isfav(){
     return this.sqlite.getFav(this.pokemon);
+    alert('de locos');
   }
 
   change(){
