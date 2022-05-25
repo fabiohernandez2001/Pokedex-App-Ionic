@@ -3,6 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!log" (click)="route()">
+        <ion-icon name="football">
+        </ion-icon>
+      </ion-button>
+      <ion-button *ngIf="log" (click)="route()" >
+        <a>Log In</a>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Pokédex</ion-title>
   </ion-toolbar>
 </ion-header>

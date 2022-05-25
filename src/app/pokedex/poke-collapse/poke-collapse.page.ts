@@ -3,6 +3,10 @@ import {PokedexService} from '../pokedex.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Pokemon} from '../pokemon';
 import {environment} from '../../../environments/environment';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat';
+import User = firebase.User;
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-poke-collapse',
@@ -13,13 +17,28 @@ export class PokeCollapsePage implements OnInit {
   @Output() selected = new EventEmitter<number>();
   public pokedex: Pokemon[] | undefined;
   public environ = environment;
-
-  constructor(private pokedexService: PokedexService){}
+  private logged!: boolean;
+  private path: string;
+  constructor(private pokedexService: PokedexService, public afStore: AngularFirestore,private router: Router){}
 
   ngOnInit() {
     this.getPokedex();
+    const userid=JSON.parse(localStorage.getItem('user'));
+    if(userid){
+      this.logged=true;
+      this.path='profile';
+    }else{
+      this.logged=false;
+      console.log(userid);
+      this.path='login';
+    }
   }
-
+  log(){
+    return this.logged;
+  }
+  route(){
+    this.router.navigate([this.path]);
+  }
   public getPokedex(): void {
     this.pokedexService.getPokedex().subscribe(
       (response: Pokemon[]) => {

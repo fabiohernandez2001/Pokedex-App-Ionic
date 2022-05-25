@@ -82,6 +82,6 @@ export class UserService {
   }
 
   conseguirUsuarios() {
-    return this.http.get<User[]>("https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json");
+    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json');
   }
 }
