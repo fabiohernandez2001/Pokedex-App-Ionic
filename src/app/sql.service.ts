@@ -21,11 +21,14 @@ export class SqlService{
               fav_id INTEGER PRIMARY KEY,
               favorito varchar(255));`, [])
             .then((res) => {
-              alert(JSON.stringify(res));
+              alert(JSON.stringify('funciona'));
             })
-            .catch((error) => alert(JSON.stringify(error)));
+            .catch((error) => {
+              alert(JSON.stringify(error));
+              alert(JSON.stringify('no funciona la senctencia'));
+            });
         })
-        .catch((error) => alert(JSON.stringify(error)));
+        .catch((error) => alert(JSON.stringify('ni se conecta')));
     });
   }
   public getFav(fav){
