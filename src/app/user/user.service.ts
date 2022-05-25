@@ -8,6 +8,7 @@ import {
 
 import {User} from './user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -52,18 +53,18 @@ export class UserService {
     return user !== null;
   }
 
-  getUserByEmail(emailP): User {
-    let user: User;
-    this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
+  getUserByEmail(emailP): Observable<User> {
+    return this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
         (response:User[]) => {
         for(let i=0;i< response.length;i++){
           if(emailP==response[i].email){
             console.log("SI");
             user = response[i];
             //console.log(user);
-            //return user;
+            return user;
           }
         }
+        return null;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

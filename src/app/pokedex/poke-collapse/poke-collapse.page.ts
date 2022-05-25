@@ -7,6 +7,7 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat';
 import User = firebase.User;
 import {Router} from "@angular/router";
+import {UserService} from "../../user/user.service";
 
 @Component({
   selector: 'app-poke-collapse',
@@ -19,25 +20,17 @@ export class PokeCollapsePage implements OnInit {
   public environ = environment;
   private logged!: boolean;
   private path: string;
-  constructor(private pokedexService: PokedexService, public afStore: AngularFirestore,private router: Router){}
+  constructor(private pokedexService: PokedexService, public afStore: AngularFirestore, private router: Router, private userService: UserService){}
 
   ngOnInit() {
     this.getPokedex();
-    const userid=JSON.parse(localStorage.getItem('user'));
+    const userid = this.userService.isLoggedIn;
     if(userid){
-      this.logged=true;
       this.path='profile';
     }else{
-      this.logged=false;
       console.log(userid);
       this.path='login';
     }
-  }
-  log(){
-    return this.logged;
-  }
-  route(){
-    this.router.navigate([this.path]);
   }
   public getPokedex(): void {
     this.pokedexService.getPokedex().subscribe(
@@ -54,7 +47,12 @@ export class PokeCollapsePage implements OnInit {
     this.pokedexService.setSelected(pokemon);
   }
 
-  toString(i: number) {
-    return String(i);
+  public signOut(){
+    this.userService.signOut().then(r => {
+      console.log('Sesión cerrada');
+      this.router.navigate(['pokedex']);
+    }).catch((error)=>{
+      console.log(error);
+    });
   }
 }

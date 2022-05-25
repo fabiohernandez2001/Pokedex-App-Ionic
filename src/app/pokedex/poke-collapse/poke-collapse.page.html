@@ -4,11 +4,13 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button *ngIf="log" (click)="route()">
-        <ion-icon name="football">
-        </ion-icon>
+      <ion-button *ngIf="userService.isLoggedIn" [routerLink]="['profile']">
+        <ion-icon name="football"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="!log" (click)="route()" >
+      <ion-button *ngIf="userService.isLoggedIn" (click)="signOut()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!userService.isLoggedIn" [routerLink]="['login']">
         <a>Log In</a>
       </ion-button>
     </ion-buttons>

@@ -16,15 +16,22 @@ export class PokemonDetailPage implements OnInit{
 
   ngOnInit() {
     this.pokemon = this.pokedexService.getSelected();
+    this.sqlite.databaseConn();
   }
+
+  addfav() {
+    this.sqlite.addFav(this.pokemon)
+  }
+
   isfav(){
     return this.sqlite.getFav(this.pokemon);
   }
+
   change(){
-    if(this.isfav()){
+    if (this.isfav()) {
       this.sqlite.deleteFav(this.pokemon);
-    }else{
-      this.sqlite.addFav(this.pokemon);
+    } else {
+      this.addfav();
     }
   }
 }

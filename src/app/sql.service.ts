@@ -7,7 +7,6 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 export class SqlService {
   private dbInstance: SQLiteObject;
   db_name = 'remotestack.db';
-  // eslint-disable-next-line @typescript-eslint/member-ordering,@typescript-eslint/naming-convention
   db_table = 'favoritos';
   fav:string[]=[];
   constructor(private platform: Platform, private sqlite: SQLite) {
@@ -21,8 +20,8 @@ export class SqlService {
           this.dbInstance = sqLite;
           sqLite.executeSql(`
 CREATE TABLE [IF NOT EXISTS] ${this.db_table} (
-fav_id INTEGER PRIMARY KEY AUTOINCREMENT,
-favorito text NOT NULL)`, [])
+fav_id INTEGER PRIMARY KEY,
+favorito varchar(255))`, [])
             .then((res) => {
               alert(JSON.stringify(res));
             })

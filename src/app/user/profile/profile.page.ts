@@ -3,7 +3,9 @@ import {User} from '../user';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {waitForAsync} from "@angular/core/testing";
+import {Pokemon} from "../../pokedex/pokemon";
 
 @Component({
   selector: 'app-profile',
@@ -12,29 +14,24 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class ProfilePage implements OnInit {
 
-  user!: User;
-  form! : FormGroup;
+  public users: User[];
+  public user!: User;
+  public form! : FormGroup;
 
-  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(public userService: UserService, public router: Router, private formBuilder: FormBuilder, public http: HttpClient) { }
 
-  ngOnInit() {
-    if(!this.userService.isLoggedIn){
+  async ngOnInit() {
+    if (!this.userService.isLoggedIn) {
       this.router.navigate(["/login"]);
-    } else{
-      let emailP = JSON.parse(localStorage.getItem('user')).email;
-      this.http.get<User[]>('https://pokeapp-9cf2b-default-rtdb.europe-west1.firebasedatabase.app/users.json').subscribe(
-        (response:User[]) => {
-        for(let i=0;i< response.length;i++){
-          if(emailP==response[i].email){
-            //console.log("SI");
-            this.user = response[i];
-            //console.log(this.user);
-          }
+    } else {
+      this.users = this.userService.getUsers();
+      for (let i = 0; i < this.users.length; i++) {
+        console.log(JSON.parse(localStorage.getItem('user')).name);
+        if (this.users[i].email == JSON.parse(localStorage.getItem('user')).email)  {
+          this.user = this.users[i];
         }
-      });
-      //this.user= this.userService.getUserByEmail(JSON.parse(localStorage.getItem('user')).email);
-      console.log(this.user);
-      this.form=this.initForm();
+      }
+      this.form = this.initForm();
     }
   }
 
